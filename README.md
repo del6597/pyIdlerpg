@@ -1,0 +1,4 @@
+pyIdlerpg
+=========
+
+Python IdleRPG implementation
