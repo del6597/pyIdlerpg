@@ -2,17 +2,25 @@
     <head>
         <title>Hello World!</title>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://cdn.socket.io/socket.io-1.0.6.js"></script>
     </head>
-    <body>
+    <body>    
         <script>
+            //var socket = io('http://localhost:8888/echo');
+            //socket.send('tiny');
+            
             var ws = new WebSocket("ws://localhost:8888/echo");
             ws.onopen = function() {
-                   ws.send("Hello, world");
+                   ws.send("login Stiny");
             };
             ws.onmessage = function (evt) {
-                   alert(evt.data);
+                   var table = document.getElementById("myTable");
+                   var row = table.insertRow(0);
+                   var cell1 = row.insertCell(0);
+                   cell1.innerHTML = evt.data;
             };
         </script>
-        Hello World!
+        <table id="myTable">
+        </table>
     </body>
 </html>
