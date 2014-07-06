@@ -1,40 +1,10 @@
+import GameEngine
 import json
+from Player import Player
 import threading
 import tornado.ioloop
 import tornado.web
 import tornado.websocket
-
-class PlayerJsonEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, Player):
-            return {"Name": obj.name, "Idled": obj.idled}
-        return json.JSONEncoder.defauilt(self, obj)
-
-class Player():
-    def __init__(self):
-        pass
-
-class GameEngine():
-    def __init__(self):
-        self.players = []
-
-    def start(self):
-        pass
-
-    def stop(self):
-        pass
-
-    def pause(self):
-        pass
-
-    def addPlayer(self, player):
-        if isinstance(player, Player):
-            self.players.append(player)
-            return True
-        return False
-
-    def encodePlayers(self):
-        return json.dumps(self.players, cls=PlayerJsonEncoder)
 
 class StatsWebSocket(tornado.websocket.WebSocketHandler):
     def open(self):
@@ -54,11 +24,9 @@ def main():
     goojoo = Player()
     goojoo.name = "Goojoo"
     goojoo.idled = 120
-    engie = GameEngine()
-    engie.addPlayer(stiny)
-    engie.addPlayer(goojoo)
-    return engie
-
+    GameEngine.addPlayer(stiny)
+    GameEngine.addPlayer(goojoo)
+    return GameEngine.encodePlayers()
 
 if __name__ == "__main__":
     main()
