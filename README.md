@@ -1,4 +1,4 @@
 pyIdlerpg
 =========
 
-Python IdleRPG implementation
+Python IdleRPG implementation utilizing Tornado
