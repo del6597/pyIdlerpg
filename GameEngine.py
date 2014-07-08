@@ -1,5 +1,5 @@
 import json
-from Player import *
+from player import *
 
 players = []
 
@@ -12,11 +12,11 @@ def stop(self):
 def pause(self):
     pass
 
-def addPlayer(player):
-    if isinstance(player, Player):
-        players.append(player)
+def addPlayer(p):
+    if isinstance(p, Player):
+        players.append(p)
         return True
-        return False
+    return False
 
 def encodePlayers():
-    return json.dumps(players, cls=PlayerJsonEncoder)
+    return json.dumps(players, cls=PlayerJSONEncoder)

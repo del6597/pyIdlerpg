@@ -1,6 +1,6 @@
 import GameEngine
 import json
-from Player import Player
+from player import Player
 import threading
 import tornado.ioloop
 import tornado.web

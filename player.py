@@ -1,13 +1,23 @@
-class player:
-  def __init__(self, name, passwd, role, ttl):
-    self.name = name
-    self.passwd = passwd
+import json
+import time
+
+class PlayerJSONEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, Player):
+            return {"Name": obj.name, "Idled": obj.idled}
+        return json.JSONEncoder.default(self, obj)
+
+class Player():
+
+  def __init__(self):
+    self.name = ""
+    self.passwd = ""
     self.admin = 0
-    self.role = role
+    self.role = ""
     self.items = [0,0,0,0,0,0,0,0,0,0]
     self.idletime = 0
     self.level = 0
-    self.ttl = ttl
+    self.ttl = 0
     self.create = time.time()
     self.last_login = time.time()
     self.align = 0
