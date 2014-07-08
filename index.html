@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Hello World!</title>
+        <title>Idle RPG</title>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="//cdn.socket.io/socket.io-1.0.6.js"></script>
     </head>
@@ -9,9 +9,9 @@
             //var socket = io('http://localhost:8888/echo');
             //socket.send('tiny');
             
-            var ws = new WebSocket("ws://localhost:8888/echo");
+            var ws = new WebSocket("ws://blue3.stiny.org:9999/irpg");
             ws.onopen = function() {
-                   ws.send("login Stiny");
+                   //ws.send("login Stiny");
             };
             ws.onmessage = function (evt) {
                    var table = document.getElementById("myTable");
