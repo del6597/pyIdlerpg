@@ -14,9 +14,27 @@ class IndexHandler(tornado.web.RequestHandler):
 
 class StatsWebSocket(tornado.websocket.WebSocketHandler):
     def open(self):
+        global clients
+        clients.append(self)
         print("Websocket opened")
+        new_player = Player()
+        new_player.idled = 100
+        new_player.name = "Player"
+        GameEngine.addPlayer(new_player)
         # Send the client JSON stats of players here
-        self.write_message(GameEngine.encodePlayers())
+        self.broadcast(GameEngine.encodePlayers())
+
+    def broadcast(self, message):
+        global clients
+        for c in clients:
+            c.write_message(message)
+
+    def on_message(self, message):
+        pass
+
+    def on_close(self):
+        global clients
+        clients.remove(self)
 
 def main():
     print("-~= Starting pyidlerpg =~-")
@@ -37,4 +55,5 @@ def main():
     print("Tornado Started")
 
 if __name__ == "__main__":
+    clients = []
     main()
