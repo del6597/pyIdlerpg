@@ -16,6 +16,7 @@ class StatsWebSocket(tornado.websocket.WebSocketHandler):
     def open(self):
         global clients
         clients.append(self)
+        GameEngine.addPlayer(Player())
         # Send the client JSON stats of players here
         self.broadcast(GameEngine.encodePlayers())
 
@@ -36,9 +37,11 @@ def main():
     stiny = Player()
     stiny.name = "Stiny"
     stiny.idled = 0
+    stiny.ttl = 300
     goojoo = Player()
     goojoo.name = "Goojoo"
     goojoo.idled = 120
+    goojoo.ttl = 600
     GameEngine.addPlayer(stiny)
     GameEngine.addPlayer(goojoo)
 

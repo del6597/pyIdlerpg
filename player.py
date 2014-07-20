@@ -4,7 +4,7 @@ import time
 class PlayerJSONEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, Player):
-            return {"Name": obj.name, "Idled": obj.idled}
+            return {"Name": obj.name, "Idled": obj.idled, "TTL": obj.ttl}
         return json.JSONEncoder.default(self, obj)
 
 class Player():
