@@ -6,13 +6,7 @@
     </head>
     <body>    
         <script>
-            //var socket = io('http://localhost:8888/echo');
-            //socket.send('tiny');
-            
             var ws = new WebSocket("ws://blue3.stiny.org:9999/irpg");
-            ws.onopen = function() {
-                   //ws.send("login Stiny");
-            };
             ws.onmessage = function (evt) {
                    var table = document.getElementById("myTable");
                    var row = table.insertRow(0);
