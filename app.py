@@ -12,20 +12,18 @@ class IndexHandler(tornado.web.RequestHandler):
     def get(request):
         request.render("index.html")
 
-open_sockets = []
 class StatsWebSocket(tornado.websocket.WebSocketHandler):
     def open(self):
-        global open_sockets
         print("Websocket opened")
         # Send the client JSON stats of players here
         self.write_message(GameEngine.encodePlayers())
-        # Add this socket to a list of connected sockets to pipe events to
-        open_sockets.append(self)
+
+    def broadcast(self, event, message):
+        for session_id, session in self.session.server._sessions._items.iteritems():
+            session.conn.emit(event, message)
 
     def on_close(self):
-        # Remove this socket from the list of sockets
-        global open_sockets
-        open_sockets.remove(self)
+        pass
 
 def main():
     print("-~= Starting pyidlerpg =~-")
@@ -44,12 +42,6 @@ def main():
     app.listen(9999) # Random port for now I guess
     tornado.ioloop.IOLoop.instance().start()
     print("Tornado Started")
-
-    time.sleep(10)
-    stiny.idled += 100
-    global open_sockets
-    for sock in open_sockets:
-        sock.write_message(GameEngine.encodePlayers())
 
 if __name__ == "__main__":
     main()
