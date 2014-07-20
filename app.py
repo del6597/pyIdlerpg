@@ -18,13 +18,6 @@ class StatsWebSocket(tornado.websocket.WebSocketHandler):
         # Send the client JSON stats of players here
         self.write_message(GameEngine.encodePlayers())
 
-    def broadcast(self, event, message):
-        for session_id, session in self.session.server._sessions._items.iteritems():
-            session.conn.emit(event, message)
-
-    def on_close(self):
-        pass
-
 def main():
     print("-~= Starting pyidlerpg =~-")
     stiny = Player()
