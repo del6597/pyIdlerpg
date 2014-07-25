@@ -16,11 +16,11 @@
                     for (i=0;i<players.length;i++) {
                         var row = document.createElement('tr');
                         var cell1 = row.insertCell(0);
-                        cell1.innerHTML = players[i].Name;
+                        cell1.innerHTML = players[i].name;
                         var cell2 = row.insertCell(1);
-                        cell2.innerHTML = players[i].Idled;
+                        cell2.innerHTML = players[i].idled;
                         var cell3 = row.insertCell(2);
-                        cell3.outerHTML = '<td id="TTL">' + players[i].TTL + '</td>';
+                        cell3.outerHTML = '<td id="TTL">' + players[i].ttl + '</td>';
                         tbody.appendChild(row);
                     }
                     table.replaceChild(tbody, old_tbody);
