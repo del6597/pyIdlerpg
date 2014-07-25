@@ -1,4 +1,4 @@
-import GameEngine
+import engine
 import json
 from player import Player
 import threading
@@ -16,9 +16,8 @@ class StatsWebSocket(tornado.websocket.WebSocketHandler):
     def open(self):
         global clients
         clients.append(self)
-        GameEngine.addPlayer(Player())
         # Send the client JSON stats of players here
-        self.broadcast(GameEngine.encodePlayers())
+        self.write_message(engine.encodePlayers())
 
     def broadcast(self, message):
         global clients
@@ -42,15 +41,14 @@ def main():
     goojoo.name = "Goojoo"
     goojoo.idled = 120
     goojoo.ttl = 600
-    GameEngine.addPlayer(stiny)
-    GameEngine.addPlayer(goojoo)
+    engine.addPlayer(stiny)
+    engine.addPlayer(goojoo)
 
     # Start Tornado stuff here I guess
     print("Tornado Starting...")
     app = tornado.web.Application([(r'/', IndexHandler),(r'/irpg', StatsWebSocket)])
     app.listen(9999) # Random port for now I guess
     tornado.ioloop.IOLoop.instance().start()
-    print("Tornado Started")
 
 if __name__ == "__main__":
     clients = []
