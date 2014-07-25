@@ -2,15 +2,21 @@ import json
 from player import *
 
 players = []
+paused = False
 
-def start(self):
+def start():
+    while (not paused):
+        # Play the game
+        pass
+
+def stop():
     pass
 
-def stop(self):
-    pass
+def pause():
+    paused = True
 
-def pause(self):
-    pass
+def unpause():
+    paused = False
 
 def addPlayer(p):
     if isinstance(p, Player):
