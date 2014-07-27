@@ -2,6 +2,7 @@ import hashlib
 import json
 import os.path
 from player import *
+from time import sleep
 
 players = []
 paused = False
@@ -38,17 +39,23 @@ def create_db():
 def load_players():
     if not os.path.isfile("irpg.json"):
         create_db()
-    fin = open("irpg.json", "r")
-    for player in json.loads(fin.read()):
-        p = Player()
-        p.__dict__ = player
-        addPlayer(p)
+    try:
+        fin = open("irpg.json", "r")
+        for player in json.loads(fin.read()):
+            p = Player()
+            p.__dict__ = player
+            addPlayer(p)
+        return True
+    except:
+        print("*** DB is corrupt or non-existant ***")
+        return False
 
-def start():
-    load_players()
+def start(tick):
+    if not load_players():
+        return False
     while (not paused):
         # Play the game
-        pass
+        sleep(tick)
 
 def stop():
     pass
