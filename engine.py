@@ -27,11 +27,15 @@ def start():
 def stop():
     pass
 
-def addPlayer(p):
-    if isinstance(p, Player):
-        players.append(p)
-        return True
-    return False
+def addPlayer(*args):
+    for p in args:
+        if isinstance(p, Player):
+            players.append(p)
 
 def encodePlayers():
     return json.dumps(players, cls=PlayerJSONEncoder)
+
+def decodePlayer(p):
+    player = Player()
+    player.__dict__ = json.loads(p)
+    return player

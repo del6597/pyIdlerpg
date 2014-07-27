@@ -1,13 +1,11 @@
 import json
 import time
 
-class PlayerJSONDecoder(json.JSONDecoder):
-    pass
-
 class PlayerJSONEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, Player):
-            return {"name": obj.name, "idled": obj.idled, "ttl": obj.ttl}
+            # In the future this can be customized, but right now I just need all variables into JSON
+            return obj.__dict__
         return json.JSONEncoder.default(self, obj)
 
 class Player():
