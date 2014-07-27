@@ -16,12 +16,16 @@ def save_players():
     fout.close()
 
 def load_players():
-    pass
+    fin = open("irpg.json", "r")
+    for player in json.loads(fin.read()):
+        p = Player()
+        p.__dict__ = player
+        addPlayer(p)
 
 def start():
+    load_players()
     while (not paused):
         # Play the game
-        load_players()
         pass
 
 def stop():
@@ -30,7 +34,9 @@ def stop():
 def addPlayer(*args):
     for p in args:
         if isinstance(p, Player):
-            players.append(p)
+            if p not in players:
+                # We only want to add unique player names
+                players.append(p)
 
 def encodePlayers():
     return json.dumps(players, cls=PlayerJSONEncoder)
