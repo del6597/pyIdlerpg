@@ -53,8 +53,11 @@ def load_players():
 def start(tick):
     if not load_players():
         return False
-    while (not paused):
+    while not paused:
         # Play the game
+        for p in players:
+            p.ttl -= tick
+            p.idled += tick
         sleep(tick)
 
 def stop():
