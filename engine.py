@@ -1,4 +1,5 @@
 import hashlib
+from itertools import *
 import json
 import os.path
 from player import *
@@ -55,9 +56,10 @@ def start(tick):
         return False
     while not paused:
         # Play the game
-        for p in players:
+        for p in filterfalse(lambda x: not x.online, players):
             p.ttl -= tick
             p.idled += tick
+            print(p.name + " tick")
         sleep(tick)
 
 def stop():
