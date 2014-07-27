@@ -1,4 +1,6 @@
+import hashlib
 import json
+import os.path
 from player import *
 
 players = []
@@ -15,7 +17,27 @@ def save_players():
     fout.write(encodePlayers())
     fout.close()
 
+def create_db():
+    print("*** Could not find the \'irpg.db\' file ***")
+    print("==> Initializing DB.",end="")
+    fout = open("irpg.json", 'a')
+    print(".",end="")
+    fout.close()
+    print(".done\n")
+    name = input("- Enter a new name for an admin character: ")
+    clazz = input("- Enter the class for said character: ")
+    pwd = hashlib.sha512(input("- Finally, enter a password: ").encode()).hexdigest()
+    admin = Player()
+    admin.name = name
+    admin.clazz = clazz
+    admin.passwd = pwd
+    admin.admin = True
+    addPlayer(admin)
+    save_players()
+
 def load_players():
+    if not os.path.isfile("irpg.json"):
+        create_db()
     fin = open("irpg.json", "r")
     for player in json.loads(fin.read()):
         p = Player()

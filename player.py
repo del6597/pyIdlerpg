@@ -13,8 +13,8 @@ class Player():
   def __init__(self):
       self.name = ""
       self.passwd = ""
-      self.admin = 0
-      self.role = ""
+      self.admin = False
+      self.clazz = ""
       self.items = [0,0,0,0,0,0,0,0,0,0]
       self.idletime = 0
       self.level = 0
@@ -24,7 +24,7 @@ class Player():
       self.align = 0
       self.idled = 0
       self.uhost = ""
-      self.online = 0
+      self.online = False
       self.xpos = 0
       self.ypos = 0
       self.penalties = [0, 0, 0, 0, 0, 0, 0]
