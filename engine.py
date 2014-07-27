@@ -1,5 +1,4 @@
 import hashlib
-from itertools import *
 import json
 import os.path
 from player import *
@@ -56,7 +55,7 @@ def start(tick):
         return False
     while not paused:
         # Play the game
-        for p in filterfalse(lambda x: not x.online, players):
+        for p in [i for i in players if i.online]:
             p.ttl -= tick
             p.idled += tick
             print(p.name + " tick")
@@ -71,6 +70,7 @@ def addPlayer(*args):
             if p not in players:
                 # We only want to add unique player names
                 players.append(p)
+    save_players()
 
 def encodePlayers():
     return json.dumps(players, cls=PlayerJSONEncoder)
