@@ -1,3 +1,4 @@
+import getpass
 import hashlib
 import json
 import os.path
@@ -26,8 +27,8 @@ def create_db():
     fout.close()
     print(".done\n")
     name = input("- Enter a new name for an admin character: ")
-    clazz = input("- Enter the class for said character: ")
-    pwd = hashlib.sha512(input("- Finally, enter a password: ").encode()).hexdigest()
+    clazz = input("- Enter the class for this character: ")
+    pwd = hashlib.sha512(getpass.getpass("- Finally, enter a password: ").encode()).hexdigest()
     admin = Player()
     admin.name = name
     admin.clazz = clazz
