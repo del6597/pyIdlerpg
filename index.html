@@ -1,48 +1,51 @@
 <html>
-    <head>
-        <title>Idle RPG</title>
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        <script src="//cdn.socket.io/socket.io-1.0.6.js"></script>
-    </head>
-    <body>    
-        <script>
-            $(document).ready(function () {
-                var ws = new WebSocket("ws://blue3.stiny.org:9999/irpg");
-                ws.onmessage = function (evt) {
-                    var table = document.getElementById("myTable");
-                    var old_tbody = document.getElementById("myTableBody");
-                    var tbody = document.createElement('tbody');
-                    var players = JSON.parse(evt.data);
-                    for (i=0;i<players.length;i++) {
-                        var row = document.createElement('tr');
-                        var cell1 = row.insertCell(0);
-                        cell1.innerHTML = players[i].name;
-                        var cell2 = row.insertCell(1);
-                        cell2.innerHTML = players[i].idled;
-                        var cell3 = row.insertCell(2);
-                        cell3.outerHTML = '<td id="TTL">' + players[i].ttl + '</td>';
-                        tbody.appendChild(row);
-                    }
-                    table.replaceChild(tbody, old_tbody);
-                    $(tbody).attr('id', 'myTableBody');
 
-                    function countDown() {
+<head>
+    <title>Idle RPG</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//cdn.socket.io/socket.io-1.0.6.js"></script>
+</head>
 
-                    }
+<body>
+    <script>
+        $(document).ready(function () {
+            var ws = new WebSocket("ws://blue3.stiny.org:9999/irpg");
+            ws.onmessage = function (evt) {
+                var table = document.getElementById("myTable");
+                var old_tbody = document.getElementById("myTableBody");
+                var tbody = document.createElement('tbody');
+                var players = JSON.parse(evt.data);
+                for (i = 0; i < players.length; i++) {
+                    var row = document.createElement('tr');
+                    var cell1 = row.insertCell(0);
+                    cell1.innerHTML = players[i].name;
+                    var cell2 = row.insertCell(1);
+                    cell2.innerHTML = players[i].idled;
+                    var cell3 = row.insertCell(2);
+                    cell3.outerHTML = '<td id="TTL">' + players[i].ttl + '</td>';
+                    tbody.appendChild(row);
+                }
+                table.replaceChild(tbody, old_tbody);
+                $(tbody).attr('id', 'myTableBody');
 
-                };
-            });
-        </script>
-        <table id="myTable">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Idled</th>
-                    <th>TTL</th>
-                </tr>
-            </thead>
-            <tbody id="myTableBody">
-            </tbody>
-        </table>
-    </body>
+                function countDown() {
+
+                }
+
+            };
+        });
+    </script>
+    <table id="myTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Idled</th>
+                <th>TTL</th>
+            </tr>
+        </thead>
+        <tbody id="myTableBody">
+        </tbody>
+    </table>
+</body>
+
 </html>
