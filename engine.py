@@ -73,6 +73,18 @@ def addPlayer(*args):
                 players.append(p)
     save_players()
 
+def removePlayer(p):
+    if p in players:
+        players.remove(p)
+        save_players()
+        return True
+    return False
+
+def getPlayer(name):
+    p = Player()
+    p.name = str(name)
+    return players[players.index(p)]
+
 def encodePlayers():
     return json.dumps(players, cls=PlayerJSONEncoder)
 
