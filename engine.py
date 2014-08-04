@@ -9,13 +9,20 @@ from time import sleep
 players = []
 paused = False
 stopped = False
-clock = threading.Barrier(2, unpause)
+clock = threading.Barrier(2)
 
 def pause():
+    global paused
     paused = True
 
 def unpause():
+    global paused
     paused = False
+    clock.wait()
+
+def stop():
+    global stopped
+    stopped = True
 
 def save_players():
     fout = open("irpg.json", 'w')
@@ -70,8 +77,6 @@ def start(tick):
             print(p.name + " tick")
         sleep(tick)
 
-def stop():
-    stopped = True
 
 def addPlayer(*args):
     for p in args:
