@@ -1,8 +1,10 @@
 import getpass
 import hashlib
 import json
+import math
 import os.path
 from player import *
+import random
 import threading
 from time import sleep
 
@@ -91,8 +93,16 @@ def decodePlayer(p):
 
 def levelUp(p):
     p.level += 1
-    p.ttl = 600 * (1.16**p.level)
-#   TODO: Give them a new weapon
+    p.ttl = math.floor(600 * (1.16**p.level))
+#   TODO: Give them a new item
+    item = random.randint(0,len(p.items))
+    new_item = 0
+    for i in range(1,int(p.level*1.5)):
+        roll = random.random()
+        if roll<=(1/(1.4**i)):
+            new_item = i
+    if new_item > p.items[item]:
+        p.items[item] = new_item
 #   TODO: Make them fight an opponent
 
 def start(tick):
