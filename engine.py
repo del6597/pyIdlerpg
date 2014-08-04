@@ -98,7 +98,7 @@ def levelUp(p):
     item = random.randint(0,len(p.items))
     new_item = 1
     for i in range(1,int(p.level*1.5)):
-        if random.randrange(1.4**(i/4))<1:
+        if random.uniform(0,1.4**(i/4))<1: # Should properly emulate the PERL version now
             new_item = i
     if new_item > p.items[item]:
         p.items[item] = new_item
