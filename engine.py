@@ -3,10 +3,13 @@ import hashlib
 import json
 import os.path
 from player import *
+import threading
 from time import sleep
 
 players = []
 paused = False
+stopped = False
+clock = threading.Barrier(2, unpause)
 
 def pause():
     paused = True
@@ -54,8 +57,13 @@ def load_players():
 def start(tick):
     if not load_players():
         return False
-    while not paused:
+    while not stopped:
         # Play the game
+        if paused:
+            # Wait on our barrier
+            # It's important that the other party waits on this barrier too 
+            # so we get released here
+            clock.wait()
         for p in [i for i in players if i.online]:
             p.ttl -= tick
             p.idled += tick
@@ -63,7 +71,7 @@ def start(tick):
         sleep(tick)
 
 def stop():
-    pass
+    stopped = True
 
 def addPlayer(*args):
     for p in args:
