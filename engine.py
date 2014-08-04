@@ -61,23 +61,6 @@ def load_players():
         print("*** DB is corrupt or non-existant ***")
         return False
 
-def start(tick):
-    if not load_players():
-        return False
-    while not stopped:
-        # Play the game
-        if paused:
-            # Wait on our barrier
-            # It's important that the other party waits on this barrier too 
-            # so we get released here
-            clock.wait()
-        for p in [i for i in players if i.online]:
-            p.ttl -= tick
-            p.idled += tick
-            print(p.name + " tick")
-        sleep(tick)
-
-
 def addPlayer(*args):
     for p in args:
         if isinstance(p, Player):
@@ -105,3 +88,28 @@ def decodePlayer(p):
     player = Player()
     player.__dict__ = json.loads(p)
     return player
+
+def levelUp(p):
+    p.level += 1
+    p.ttl = 600 * (1.16**p.level)
+#   TODO: Give them a new weapon
+#   TODO: Make them fight an opponent
+
+def start(tick):
+    if not load_players():
+        return False
+    while not stopped:
+        # Play the game
+        if paused:
+            # Wait on our barrier
+            # It's important that the other party waits on this barrier too 
+            # so we get released here
+            clock.wait()
+        for p in [i for i in players if i.online]:
+            p.ttl -= tick
+            p.idled += tick
+            if p.ttl <= 0:
+                levelUp(p)
+                print(str(p.name) + " the " + str(p.clazz) + " is now level " + str(p.level) + "! Next level in " + str(p.ttl))
+                save_players()
+        sleep(tick)
