@@ -96,10 +96,9 @@ def levelUp(p):
     p.ttl = math.floor(600 * (1.16**p.level))
 #   TODO: Give them a new item
     item = random.randint(0,len(p.items))
-    new_item = 0
+    new_item = 1
     for i in range(1,int(p.level*1.5)):
-        roll = random.random()
-        if roll<=(1/(1.4**i)):
+        if random.randrange(1.4**(i/4))<1:
             new_item = i
     if new_item > p.items[item]:
         p.items[item] = new_item
