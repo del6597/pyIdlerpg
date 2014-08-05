@@ -93,8 +93,11 @@ def decodePlayer(p):
 
 def levelUp(p):
     p.level += 1
-    p.ttl = math.floor(600 * (1.16**p.level))
-    item = random.randint(0,len(p.items))
+    if(p.level>60):
+        p.ttl = math.floor(600 * (1.16**60)) + (86400*(p.level-60))
+    else:
+        p.ttl = math.floor(600 * (1.16**p.level))
+    item = random.randint(0,len(p.items)-1)
     new_item = 1
     for i in range(1,int(p.level*1.5)):
         if random.uniform(0,1.4**(i/4))<1: # Should properly emulate the PERL version now
