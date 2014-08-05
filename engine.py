@@ -94,7 +94,6 @@ def decodePlayer(p):
 def levelUp(p):
     p.level += 1
     p.ttl = math.floor(600 * (1.16**p.level))
-#   TODO: Give them a new item
     item = random.randint(0,len(p.items))
     new_item = 1
     for i in range(1,int(p.level*1.5)):
@@ -103,6 +102,16 @@ def levelUp(p):
     if new_item > p.items[item]:
         p.items[item] = new_item
 #   TODO: Make them fight an opponent
+
+def HoG():
+    online = [i for i in players if i.online]
+    player = online[random.randint(0,len(online)-1)]
+    time = int(((5 + random.randint(0,70)/100) * player.ttl))
+    # NOTE: 1/5 chance?
+    if(random.randint(0,4)): 
+        player.ttl -= time
+    else:
+        player.ttl += time
 
 def start(tick):
     if not load_players():
